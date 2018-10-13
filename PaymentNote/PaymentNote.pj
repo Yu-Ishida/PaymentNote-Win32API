@@ -1,0 +1,24 @@
+' ActiveBasic Project file.
+
+#VERSION=9
+
+#MODULETYPE=0
+
+#NAME=PaymentNote
+
+#PLATFORM=32
+
+#USEWINDOW=1
+
+#OPTION=&H00010002
+
+#OUTPUT_RELEASE=.\PaymentNote.exe
+
+#OUTPUT_DEBUG=.\PaymentNote_debug.exe
+
+#RESOURCE=0
+
+#SOURCE
+PaymentNote.abp
+MainWnd.sbp
+General.abp

@@ -1,0 +1,39 @@
+WINDOW:MainWnd
+    HANDLE    = hMainWnd
+    POINT     = -2147483648,-2147483648
+    SIZE      = 700,500
+    CAPTION   = "簡単支出帳"
+    STYLE     = &H10ca0000
+    EXSTYLE   = &H00000000
+    MENUID    = IDM_MENU
+    ID        = 0
+    BGCOLOR   = 15
+    FONT      = -12,0,0,0,400,0,0,0,128,3,2,1,32,"ＭＳ Ｐゴシック"
+    CLASS     = "NORMAL"
+    CALLBACK  = MainWndProc
+    TYPE      = 0
+    FILEPATH  = MainWnd.sbp
+    ITEM      = PaymentNoteListView,360,10,315,400,"",&H50000005,&H00000200,9
+    ITEM      = ItemNameStatic,20,10,65,12,"購入商品名",&H50000000,&H00000000,11
+    ITEM      = ItemNameEditBox,20,30,310,21,"",&H50000000,&H00000200,4
+    ITEM      = QuantityStatic,20,60,50,12,"数量",&H50000000,&H00000000,11
+    ITEM      = QuantityEditBox,20,80,310,21,"",&H50002000,&H00000200,4
+    ITEM      = UnitPriceStatic,20,110,97,12,"単価",&H50000000,&H00000000,11
+    ITEM      = UnitPriceEditBox,20,130,310,21,"",&H50002000,&H00000200,4
+    ITEM      = CategoryStatic,20,160,50,12,"カテゴリ",&H50000000,&H00000000,11
+    ITEM      = CategoryComboBox,20,180,310,84,"",&H50200003,&H00000000,3
+    ITEM      = AddButton,40,300,100,100,"追加",&H50000000,&H00000000,1
+    ITEM      = DeleteButton,190,300,100,100,"削除",&H50000000,&H00000000,1
+    ITEM      = TotalAmountStatic,360,420,59,12,"合計金額：",&H50000000,&H00000000,11
+    ITEM      = TotalAmountEditBox,420,415,230,21,"0",&H50002802,&H00000200,4
+    ITEM      = UinitStatic,660,420,15,12,"円",&H50000000,&H00000000,11
+END
+MENU:IDM_MENU
+    POPUP     = "ファイル(&F)",0
+        ITEM      = IDM_SaveMenu,"名前をつけて保存(&S)",0
+        ITEM      = IDM_ExitMenu,"終了(&X)",0
+    END
+    POPUP     = "ヘルプ(&H)",0
+        ITEM      = IDM_VerInfoMenu,"バージョン情報(&A)",0
+    END
+END

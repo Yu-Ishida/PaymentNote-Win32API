@@ -1,0 +1,126 @@
+'このファイルはウィンドウ定義ファイル（*.wnd）をもとに生成されています
+
+Dim _RadSys_InitCtrls As INITCOMMONCONTROLSEX
+_RadSys_InitCtrls.dwSize=Len(_RadSys_InitCtrls)
+_RadSys_InitCtrls.dwICC=ICC_WIN95_CLASSES
+InitCommonControlsEx(_RadSys_InitCtrls)
+
+Const PaymentNoteListView=1000
+Const ItemNameStatic=1001
+Const ItemNameEditBox=1002
+Const QuantityStatic=1003
+Const QuantityEditBox=1004
+Const UnitPriceStatic=1005
+Const UnitPriceEditBox=1006
+Const CategoryStatic=1007
+Const CategoryComboBox=1008
+Const AddButton=1009
+Const DeleteButton=1010
+Const TotalAmountStatic=1011
+Const TotalAmountEditBox=1012
+Const UinitStatic=1013
+Const IDM_SaveMenu=1014
+Const IDM_ExitMenu=1015
+Const IDM_VerInfoMenu=1016
+
+Dim hMainWnd As HWND
+Dim hFont_MainWnd As HFONT
+hFont_MainWnd=CreateFont(-12,0,0,0,400,0,0,0,128,3,2,1,32,"ＭＳ Ｐゴシック")
+Dim h3DFaceBrush As HBRUSH
+h3DFaceBrush=CreateSolidBrush(GetSysColor(COLOR_3DFACE))
+
+
+Dim hMenu_IDM_MENU As HMENU
+hMenu_IDM_MENU=CreateMenu()
+Dim hMenu_IDM_MENU_1 As HMENU
+hMenu_IDM_MENU_1=CreatePopupMenu()
+InsMenu hMenu_IDM_MENU_1,0,MF_BYPOSITION,Ex"バージョン情報(&A)",IDM_VerInfoMenu,0,0
+InsMenu hMenu_IDM_MENU,0,MF_BYPOSITION,Ex"ヘルプ(&H)",0,hMenu_IDM_MENU_1,0
+Dim hMenu_IDM_MENU_0 As HMENU
+hMenu_IDM_MENU_0=CreatePopupMenu()
+InsMenu hMenu_IDM_MENU_0,0,MF_BYPOSITION,Ex"終了(&X)",IDM_ExitMenu,0,0
+InsMenu hMenu_IDM_MENU_0,0,MF_BYPOSITION,Ex"名前をつけて保存(&S)",IDM_SaveMenu,0,0
+InsMenu hMenu_IDM_MENU,0,MF_BYPOSITION,Ex"ファイル(&F)",0,hMenu_IDM_MENU_0,0
+
+Sub PaymentNote_DestroyObjects()
+	DestroyMenu(hMenu_IDM_MENU)
+	DestroyMenu(hMenu_IDM_MENU_1)
+	DestroyMenu(hMenu_IDM_MENU_0)
+	DeleteObject(hFont_MainWnd)
+	DeleteObject(h3DFaceBrush)
+End Sub
+
+Function EventCall_MainWnd(hWnd As HWND, message As DWord, wParam As WPARAM, lParam As LPARAM) As LRESULT
+	Select Case message
+		Case WM_DESTROY
+			MainWnd_Destroy()
+			SetMenu(hWnd,NULL)
+		Case WM_CREATE
+			hMainWnd=hWnd
+			SetMenu(hWnd,hMenu_IDM_MENU)
+			CreateWindowEx(&H00000200,"SysListView32","",&H50000005,360,10,315,400,hWnd,PaymentNoteListView As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,PaymentNoteListView),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000000,"STATIC","購入商品名",&H50000000,20,10,65,12,hWnd,ItemNameStatic As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,ItemNameStatic),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000200,"EDIT","",&H50000000,20,30,310,21,hWnd,ItemNameEditBox As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,ItemNameEditBox),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000000,"STATIC","数量",&H50000000,20,60,50,12,hWnd,QuantityStatic As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,QuantityStatic),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000200,"EDIT","",&H50002000,20,80,310,21,hWnd,QuantityEditBox As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,QuantityEditBox),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000000,"STATIC","単価",&H50000000,20,110,97,12,hWnd,UnitPriceStatic As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,UnitPriceStatic),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000200,"EDIT","",&H50002000,20,130,310,21,hWnd,UnitPriceEditBox As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,UnitPriceEditBox),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000000,"STATIC","カテゴリ",&H50000000,20,160,50,12,hWnd,CategoryStatic As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,CategoryStatic),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000000,"COMBOBOX","",&H50200003,20,180,310,84,hWnd,CategoryComboBox As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,CategoryComboBox),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000000,"BUTTON","追加",&H50000000,40,300,100,100,hWnd,AddButton As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,AddButton),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000000,"BUTTON","削除",&H50000000,190,300,100,100,hWnd,DeleteButton As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,DeleteButton),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000000,"STATIC","合計金額：",&H50000000,360,420,59,12,hWnd,TotalAmountStatic As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,TotalAmountStatic),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000200,"EDIT","0",&H50002802,420,415,230,21,hWnd,TotalAmountEditBox As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,TotalAmountEditBox),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+			CreateWindowEx(&H00000000,"STATIC","円",&H50000000,660,420,15,12,hWnd,UinitStatic As HMENU,GetModuleHandle(0),0)
+			SendMessage(GetDlgItem(hWnd,UinitStatic),WM_SETFONT,hFont_MainWnd As WPARAM,0)
+		Case WM_CLOSE
+			Dim cancel=0 As Integer
+			If cancel=0 Then DestroyWindow(hWnd)
+		Case Else
+			EventCall_MainWnd=DefWindowProc(hWnd,message,wParam,lParam)
+			Exit Function
+	End Select
+	EventCall_MainWnd=0
+End Function
+
+Function DefaultCallProc(hWnd As HWND, message As DWord, wParam As WPARAM, lParam As LPARAM) As LRESULT
+	DefaultCallProc=DefWindowProc(hWnd,message,wParam,lParam)
+End Function
+
+Dim _RadSys_dlgwcl As WNDCLASSEX
+FillMemory(VarPtr(_RadSys_dlgwcl),Len(_RadSys_dlgwcl),0)
+_RadSys_dlgwcl.cbSize=Len(_RadSys_dlgwcl)
+_RadSys_dlgwcl.hInstance=GetModuleHandle(0)
+_RadSys_dlgwcl.style=CS_HREDRAW or CS_VREDRAW or CS_DBLCLKS
+_RadSys_dlgwcl.hIcon=LoadIcon(NULL,MAKEINTRESOURCE(IDI_APPLICATION))
+_RadSys_dlgwcl.hIconSm=LoadIcon(NULL,MAKEINTRESOURCE(IDI_WINLOGO))
+_RadSys_dlgwcl.hCursor=LoadCursor(NULL,MAKEINTRESOURCE(IDC_ARROW))
+_RadSys_dlgwcl.lpszClassName="NORMALDLG"
+_RadSys_dlgwcl.hbrBackground=h3DFaceBrush
+_RadSys_dlgwcl.lpfnWndProc=AddressOf(DefaultCallProc)
+RegisterClassEx(_RadSys_dlgwcl)
+
+Function DialogBox(hOwnerWnd As HWND, TemplateName As LPSTR) As LONG_PTR
+	Dim hDlg As HWND
+End Function
+Sub EndDialog(hWnd As HWND, lResult As Long)
+	EnableWindow(GetWindow(hWnd,GW_OWNER),1)
+	DestroyWindow(hWnd)
+	PostMessage(0,WM_QUIT,lResult,0)
+End Sub
+
+Function CreateDialog(hOwnerWnd As HWND, TemplateName As LPSTR) As HWND
+End Function

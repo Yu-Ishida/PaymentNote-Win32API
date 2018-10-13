@@ -1,0 +1,25 @@
+/*
+* 共用定数及びメソッド定義
+*/
+
+' 金額リストビューに表示するヘッダ名
+Const LISTVIEW_COLUMS_COUNT = 5
+Dim ListViewColums[LISTVIEW_COLUMS_COUNT] As String
+ListViewColums[0] = "購入商品名"
+ListViewColums[1] = "カテゴリ"
+ListViewColums[2] = "数量"
+ListViewColums[3] = "単価"
+ListViewColums[4] = "金額"
+
+' カテゴリコンボボックスに表示する項目名
+Const CATEGORY_COMBO_ITEM_COUNT = 9
+Dim CategoryComboItems[CATEGORY_COMBO_ITEM_COUNT] As String
+CategoryComboItems[0] = "食費"
+CategoryComboItems[1] = "光熱費"
+CategoryComboItems[2] = "通信費"
+CategoryComboItems[3] = "家賃"
+CategoryComboItems[4] = "ローン"
+CategoryComboItems[5] = "交通費"
+CategoryComboItems[6] = "行楽費"
+CategoryComboItems[7] = "税金"
+CategoryComboItems[8] = "その他"
